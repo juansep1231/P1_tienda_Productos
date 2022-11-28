@@ -13,7 +13,6 @@ if(!isset($_SESSION["sn_usuario"])&&!isset($_SESSION["sn_clave"])){
     header("Location: index.php");
 }
 
-
 #Se verifica que esté maracada la opción para guardar la información
 #Si no existe cookie se toma el valor del POST
 if(!isset($_COOKIE["ck_preferencias"])){
@@ -63,7 +62,6 @@ if($lenguaje == "en"){
     $titulo = "Product List";
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +89,5 @@ if($lenguaje == "en"){
 
 
     </body>
-
-
 
 </html>
