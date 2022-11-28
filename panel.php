@@ -15,19 +15,16 @@ if(!isset($_SESSION["sn_usuario"])&&!isset($_SESSION["sn_clave"])){
 
 
 #Se verifica que esté maracada la opción para guardar la información
+#Si no existe cookie se toma el valor del POST
 if(!isset($_COOKIE["ck_preferencias"])){
     echo "entre aca arriba";
     $recordarPreferencias = (isset($_POST["chkrecordar"]))?$_POST["chkrecordar"]:"";
 }else{  
-    echo "entre aca abajo";
-   # $recordarPreferencias = $_COOKIE["ck_preferencias"];
-   #Quiere decir que viene desde el link de los lenguajes
+    #Quiere decir que viene desde el link de los lenguajes
    if(empty($_POST)){
-    echo "no hay post";
     $recordarPreferencias = $_COOKIE["ck_preferencias"];
    }else{ #Quiere decir que viene del Login
-    echo "si hay post";
-    var_dump($_POST);
+       
     $recordarPreferencias = (isset($_POST["chkrecordar"]))?$_COOKIE["ck_preferencias"]:"";
    }
 }
@@ -36,16 +33,7 @@ $archivo = "categorias_es.txt";
 $titulo = "Lista de Productos";
 $defaultleng = "es";
 
-#Verifica si la variable $_GET está vacía para notar que es un ingreso desde el login.
-#Si el ingreso es desde el login es necesario verificar si hay cookies creadas para el idioma o se utiliza el idioma pro defecto
-/*if(empty($_GET)){
-    var_dump($_GET);
-     $lenguaje = (isset($_COOKIE["ck_lenguaje"])?$_COOKIE["ck_lenguaje"]:$defaultleng);
-}else if(isset($_COOKIE["ck_lenguaje"])){
-    var_dump($_COOKIE);   
-     $lenguaje = $_GET["leng"];
-       
-}*/
+#Verifica si esta 
 if(empty($_GET)){
      $lenguaje = (isset($_COOKIE["ck_lenguaje"])?$_COOKIE["ck_lenguaje"]:$defaultleng);
 }else{
@@ -54,63 +42,28 @@ if(empty($_GET)){
        
 }
 
-
-
-
-
-/*
-if(isset($_COOKIE["ck_lenguaje"])){
-    echo "si entre aqui";
-    
-    $lenguaje = ($_COOKIE["ck_lenguaje"]==$_GET["leng"])?$_COOKIE["ck_lenguaje"]:$_GET["leng"];
-    if($lenguaje=="es"){
-        $lenguaje = ($_COOKIE["ck_lenguaje"]==$_GET["leng"])?$_GET["leng"]:$_COOKIE["ck_lenguaje"];
-    }
-    
-}else{
-    $lenguaje = $_GET["leng"];
-}
-*/
-
-
-
-
+#Se verifica si es necesario cambiar los cookies o borrarlos cuando no esta chequeado guardar preferencias
 if($recordarPreferencias!=""){
     echo $lenguaje;
     echo $recordarPreferencias;
-    setcookie("ck_usuario",$_SESSION["sn_usuario"],time()+(86400)); #se pone el tiempo que dura la cookie
-    setcookie("ck_clave",$_SESSION["sn_clave"],time()+(86400)); #se pone el tiempo que dura la cookie
+    setcookie("ck_usuario",$_SESSION["sn_usuario"],time()+(86400)); #se pone el tiempo que dura la cookie en este caso 24 horas
+    setcookie("ck_clave",$_SESSION["sn_clave"],time()+(86400)); 
     setcookie("ck_lenguaje",$lenguaje,time()+(86400));
     setcookie("ck_preferencias",$recordarPreferencias,time()+(86400));
 }else{
-    setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo que dura la cookie
-    setcookie("ck_clave","",time()-(86400)); #se pone el tiempo que dura la cookie
+    setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo negativo para borrar la cookie
+    setcookie("ck_clave","",time()-(86400)); 
     setcookie("ck_lenguaje","",time()-(86400));
     setcookie("ck_preferencias","",time()-(86400));
 }
 
 
-/*3
-if(($_COOKIE["ck_preferencias"])!=($_POST["chkrecordar"])){
-    setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo que dura la cookie
-    setcookie("ck_clave","",time()-(86400)); #se pone el tiempo que dura la cookie
-    setcookie("ck_lenguaje","",time()-(86400));
-    setcookie("ck_preferencias","",time()-(86400));
-}
-*/
-#se establece el idioma en caso de que no haya cookies
-/*$lenguaje ="";
-var_dump($_COOKIE);
-if(count($_COOKIE)==1){
-    $lenguaje = (empty($_GET))?$defaultleng:$_GET["leng"];
-    echo "orale";
-}*/
 
+#Si lenguaje es ingles se cambia el título y el archivo de lectura
 if($lenguaje == "en"){
     $archivo = "categorias_en.txt";
     $titulo = "Product List";
 }
-
 
 
 ?>
@@ -131,7 +84,7 @@ if($lenguaje == "en"){
             $file = fopen($archivo, "r") or die("No se puede abrir el archivo!");
             // Output one character until end-of-file
             while(!feof($file)) {
-                echo fgets($file) . "";
+                echo fgets($file) ."<br>";
             }
             fclose($file);
         
