@@ -23,7 +23,7 @@ if(!isset($_COOKIE["ck_preferencias"])){
     #Quiere decir que viene desde el link de los lenguajes
    if(empty($_POST)){
     $recordarPreferencias = $_COOKIE["ck_preferencias"];
-   }else{ #Quiere decir que viene del Login
+   }else{ #Quiere decir que viene de la págian del Login
        
     $recordarPreferencias = (isset($_POST["chkrecordar"]))?$_COOKIE["ck_preferencias"]:"";
    }
@@ -33,7 +33,7 @@ $archivo = "categorias_es.txt";
 $titulo = "Lista de Productos";
 $defaultleng = "es";
 
-#Verifica si esta 
+#Verifica si hay parámetros en el GET
 if(empty($_GET)){
      $lenguaje = (isset($_COOKIE["ck_lenguaje"])?$_COOKIE["ck_lenguaje"]:$defaultleng);
 }else{
