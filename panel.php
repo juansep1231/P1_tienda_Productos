@@ -44,8 +44,6 @@ if(empty($_GET)){
 
 #Se verifica si es necesario cambiar los cookies o borrarlos cuando no esta chequeado guardar preferencias
 if($recordarPreferencias!=""){
-    echo $lenguaje;
-    echo $recordarPreferencias;
     setcookie("ck_usuario",$_SESSION["sn_usuario"],time()+(86400)); #se pone el tiempo que dura la cookie en este caso 24 horas
     setcookie("ck_clave",$_SESSION["sn_clave"],time()+(86400)); 
     setcookie("ck_lenguaje",$lenguaje,time()+(86400));
