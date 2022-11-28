@@ -33,6 +33,7 @@ $titulo = "Lista de Productos";
 $defaultleng = "es";
 
 #Verifica si hay parámetros en el GET
+
 if(empty($_GET)){
      $lenguaje = (isset($_COOKIE["ck_lenguaje"])?$_COOKIE["ck_lenguaje"]:$defaultleng);
 }else{
@@ -41,6 +42,13 @@ if(empty($_GET)){
        
 }
 
+if(empty($recordarPreferencias)){
+    $lenguaje = $defaultleng;
+    setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo negativo para borrar la cookie
+    setcookie("ck_clave","",time()-(86400)); 
+    setcookie("ck_lenguaje","",time()-(86400));
+    setcookie("ck_preferencias","",time()-(86400));
+}
 #Se verifica si es necesario cambiar los cookies o borrarlos cuando no esta chequeado guardar preferencias
 if($recordarPreferencias!=""){
     setcookie("ck_usuario",$_SESSION["sn_usuario"],time()+(86400)); #se pone el tiempo que dura la cookie en este caso 24 horas
@@ -48,14 +56,22 @@ if($recordarPreferencias!=""){
     setcookie("ck_lenguaje",$lenguaje,time()+(86400));
     setcookie("ck_preferencias",$recordarPreferencias,time()+(86400));
 }else{
+    #Se borran las cookies y se reestablece al idioma original
+   # $lenguaje = $defaultleng;
     setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo negativo para borrar la cookie
     setcookie("ck_clave","",time()-(86400)); 
     setcookie("ck_lenguaje","",time()-(86400));
     setcookie("ck_preferencias","",time()-(86400));
+    var_dump($_COOKIE);
 }
 
+#Establecer el idioma cuando no hay cookies 
+echo count($_COOKIE);
+if(count($_COOKIE)==1){
 
-
+    echo "holaaaaa";
+    $lenguaje = (empty($_POST))?$_GET["leng"]:$defaultleng;
+}
 #Si lenguaje es ingles se cambia el título y el archivo de lectura
 if($lenguaje == "en"){
     $archivo = "categorias_en.txt";
