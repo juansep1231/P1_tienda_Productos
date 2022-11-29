@@ -11,6 +11,7 @@ if(isset($_POST["usuario"])&&isset($_POST["clave"])){
 
 if(!isset($_SESSION["sn_usuario"])&&!isset($_SESSION["sn_clave"])){
     header("Location: index.php");
+    
 }
 
 #Se verifica que esté maracada la opción para guardar la información
