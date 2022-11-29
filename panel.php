@@ -16,7 +16,6 @@ if(!isset($_SESSION["sn_usuario"])&&!isset($_SESSION["sn_clave"])){
 #Se verifica que esté maracada la opción para guardar la información
 #Si no existe cookie se toma el valor del POST
 if(!isset($_COOKIE["ck_preferencias"])){
-    echo "entre aca arriba";
     $recordarPreferencias = (isset($_POST["chkrecordar"]))?$_POST["chkrecordar"]:"";
 }else{  
     #Quiere decir que viene desde el link de los lenguajes
@@ -57,19 +56,16 @@ if($recordarPreferencias!=""){
     setcookie("ck_preferencias",$recordarPreferencias,time()+(86400));
 }else{
     #Se borran las cookies y se reestablece al idioma original
-   # $lenguaje = $defaultleng;
-    setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo negativo para borrar la cookie
+      setcookie("ck_usuario","",time()-(86400)); #se pone el tiempo negativo para borrar la cookie
     setcookie("ck_clave","",time()-(86400)); 
     setcookie("ck_lenguaje","",time()-(86400));
     setcookie("ck_preferencias","",time()-(86400));
-    var_dump($_COOKIE);
+    
 }
 
 #Establecer el idioma cuando no hay cookies 
-echo count($_COOKIE);
-if(count($_COOKIE)==1){
 
-    echo "holaaaaa";
+if(count($_COOKIE)==1){
     $lenguaje = (empty($_POST))?$_GET["leng"]:$defaultleng;
 }
 #Si lenguaje es ingles se cambia el título y el archivo de lectura
